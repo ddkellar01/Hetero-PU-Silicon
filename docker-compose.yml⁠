@@ -1,0 +1,13 @@
+version: '3.8'
+services:
+  orchestrator:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - TARGET_ARCH=CPU # Runs OS and orchestration[span_0](start_span)[span_0](end_span)
+  
+  tpu_pod_worker:
+    image: hetero-pu/tpu-worker:latest
+    deploy:
+      replicas: 4 # Simulates TPU pod scaling out[span_1](start_span)[span_1](end_span)
