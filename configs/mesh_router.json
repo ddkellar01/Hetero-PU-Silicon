@@ -1,0 +1,10 @@
+{
+  "routing_rules": {
+    "orchestration_preprocessing": "CPU",
+    "training_deep_learning": "GPU",
+    "google_scale_tensor": "TPU",
+    "edge_mobile_inference": "NPU",
+    "real_time_llm_serving": "LPU",
+    "data_center_infrastructure": "DPU"
+  }
+}
