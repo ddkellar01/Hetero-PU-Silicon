@@ -1,0 +1,13 @@
+# Choose based on workload: latency, parallelism, power, cost, and scale[span_19](start_span)[span_19](end_span)
+CPU:
+  limitation: "Slow at parallel math[span_20](start_span)"[span_20](end_span)
+GPU:
+  limitation: "High power draw; Overkill for small tasks[span_21](start_span)"[span_21](end_span)
+TPU:
+  limitation: "Mostly tied to Google ecosystem[span_22](start_span)"[span_22](end_span)
+LPU:
+  limitation: "Limited memory per chip; often requires multiple linked chips[span_23](start_span)"[span_23](end_span)
+NPU:
+  limitation: "Mostly inference only; Limited model size[span_24](start_span)"[span_24](end_span)
+DPU:
+  limitation: "Not a consumer processor; Niche infrastructure use case[span_25](start_span)"[span_25](end_span)
