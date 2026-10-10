@@ -1,0 +1,21 @@
+name: Hetero-PU-Silicon CI
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+      - name: Build Core Orchestrator
+        run: cargo build --verbose
+      - name: Test Python Bindings
+        run: python3 tests/pipeline_integration.py
