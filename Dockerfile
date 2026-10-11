@@ -3,10 +3,9 @@
 # ==============================================================================
 FROM ubuntu:22.04 AS builder
 
-# Prevent interactive prompts during package installation
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install essential system dependencies, compilers, and tools
+# Install system dependencies and build tools
 RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
@@ -15,13 +14,17 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory inside the container
+# Install Rust toolchain
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+ENV PATH="/root/.cargo/bin:${PATH}"
+
+# Set working directory
 WORKDIR /app
 
-# Copy all project files into the build container
+# Copy all project files
 COPY . .
 
-# FIX APPLIED HERE: Grant execution permission to build.sh before running it
+# Grant execution permission to your build script and execute it
 RUN chmod +x build.sh && ./build.sh
 
 # ==============================================================================
@@ -29,15 +32,14 @@ RUN chmod +x build.sh && ./build.sh
 # ==============================================================================
 FROM ubuntu:22.04 AS runtime
 
-# Set working directory
 WORKDIR /app
 
 # Copy the compiled release binary from the builder stage
-# (Adjust path if your target output differs)
 COPY --from=builder /app/target/release/hetero-pu-silicon /app/hetero-pu-silicon
 
-# Expose the application port
+# Expose port
 EXPOSE 8080
 
-# Command to execute the orchestrator binary
+# Execute the binary
 CMD ["./hetero-pu-silicon"]
+
